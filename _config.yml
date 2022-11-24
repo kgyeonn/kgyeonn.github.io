@@ -12,11 +12,11 @@
 
 # theme                  : "minimal-mistakes-jekyll"
 # remote_theme           : "mmistakes/minimal-mistakes"
-minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+minimal_mistakes_skin    : "air", # "default", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Kgyeonn Data Analysis"
+title                    : "kgyeonn(DA)"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "kgyeonn_"
@@ -104,11 +104,11 @@ analytics:
 
 # Site Author
 author:
-  name             : "Your Name"
+  name             : "@kgyeonn_"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an **amazing** person."
-  location         : "Somewhere"
-  email            :
+  bio              : # "I am an **amazing** person."
+  location         : #"Somewhere"
+  email            : "kgyeonn@gmail.com"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
