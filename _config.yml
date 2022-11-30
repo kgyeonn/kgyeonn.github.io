@@ -12,29 +12,29 @@
 
 # theme                  : "minimal-mistakes-jekyll"
 # remote_theme           : "mmistakes/minimal-mistakes"
-minimal_mistakes_skin    : "air" # "default", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+minimal_mistakes_skin    : "contrast" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
 published                : true
 locale                   : "ko-KR"
-title                    : "kgyeonn(DA)"
-title_separator          : "-"
-subtitle                 : # site tagline that appears below site title in masthead
-name                     : #"kgyeonn_"
-description              : #"데이터분석 공부를 위한 "
+title                    : "분석노트"
+title_separator          : "|"
+subtitle                 : "python/tableau"
+name                     : "kgyeonn_"
+description              : "데이터 공부를 위한 블로그입니다."
 url                      : "https://kgyeonn.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
-logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
+logo                     : "/assets/images/emoji-logo.jpeg"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
 future                   : true
-# breadcrumbs            : false # true, false (default)
+breadcrumbs              : true # true, false (default)
 words_per_minute         : 200
 comments:
-  provider               : # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "giscus", "custom"
+  provider               : "disqus" # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "giscus", "custom"
   disqus:
-    shortname            : # https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
+    shortname            : "analysis-note"
   discourse:
     server               : # https://meta.discourse.org/t/embedding-discourse-comments-via-javascript/31963 , e.g.: meta.discourse.org
   facebook:
@@ -106,10 +106,10 @@ analytics:
 
 # Site Author
 author:
-  name             : "@kgyeonn_"
+  name             : "kim gayeon"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : # "I am an **amazing** person."
-  location         : #"Somewhere"
+  bio              : "I am an **amazing** person."
+  location         : "South Korea"
   email            : "kgyeonn@gmail.com"
   links:
     - label: "Email"
@@ -289,7 +289,8 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
-      comments: # true
+      comments: true
       share: true
       related: true
-      
+      show_date : true
+
