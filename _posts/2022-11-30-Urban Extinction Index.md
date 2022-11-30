@@ -1,7 +1,7 @@
 ---
 
 layout: single
-title:  "[Tableau] 도시소멸지수구하기-(2)"
+title:  "[Tableau] 도시소멸지수 구하기-(2)"
 
 ---
 
