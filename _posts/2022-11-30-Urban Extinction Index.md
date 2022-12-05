@@ -2,9 +2,9 @@
 
 layout: single
 title:  "[Tableau] 도시소멸지수 구하기-(2)"
+categories : Tableau
 
 ---
-
 
 
 ## 1. 도시소멸지수 등급화
@@ -33,7 +33,7 @@ END
 
 - 도시소멸지수가 낮을 수록 소멸위험지역이 높음 ⇒ 가임여성비율이 낮고, 고령자 비율이 높음
 
-![01_level](../images/2022-11-30-Urban Extinction Index/01_level.png)
+![01_level](../../images/2022-11-30-Urban Extinction Index/01_level.png)
 
 
 
@@ -41,7 +41,7 @@ END
 
 - 가임여성비율의 범위가 0.01부터 1.00이니까 데이터 유형을 실수로 하고 최소값0.01 최대값 1.00으로 설정
 
-![02_P_womenratio](../images/2022-11-30-Urban Extinction Index/02_P_womenratio.png)
+![02_P_womenratio](../../images/2022-11-30-Urban Extinction Index/02_P_womenratio.png)
 
 ```sql
 # 도시소멸지수에 설정한 매개변수값 곱하기 
@@ -50,7 +50,7 @@ SUM([가임여성수])/SUM([고령자수])*[H_가임여성비율범위]
 
 - 도시소멸지수에 가임여성비율 값을 곱하여 파라미터 조정하기
 
-![03_parameter](../images/2022-11-30-Urban Extinction Index/03_parameter.png)
+![03_parameter](../../images/2022-11-30-Urban Extinction Index/03_parameter.png)
 
 * 도시소멸지수
 
@@ -70,7 +70,7 @@ SUM([가임여성수])/SUM([고령자수])*[H_가임여성비율범위]
 
 - 고령자 비율 범위가 65세부터 100세까지니까  데이터 유형은 정수로 맞춰주고 최소값은 65 최대값은 100으로 설정
 
-![04_P_oldman](../images/2022-11-30-Urban Extinction Index/04_P_oldman.png)
+![04_P_oldman](../../images/2022-11-30-Urban Extinction Index/04_P_oldman.png)
 
 ```sql
 # 도시소멸지수에 설정한 매개변수값 곱하기 
@@ -79,7 +79,7 @@ SUM([가임여성수])/SUM([고령자수])*[H_고령자비율범위]
 
 - 도시소멸지수에 고령자비율을 곱하여 파라미터 조정하기
 
-![05_oldmanparameter](../images/2022-11-30-Urban Extinction Index/05_oldmanparameter.png)
+![05_oldmanparameter](../../images/2022-11-30-Urban Extinction Index/05_oldmanparameter.png)
 
 - 고령자비율범위 * 도시소멸지수
   - 매개변수가 65인 경우 도시소멸지수는 44.79
@@ -99,7 +99,7 @@ SUM([가임여성수])/SUM([고령자수])*[H_고령자비율범위]
 {FIXED [시도명] ,[시군구명],[읍면동명],[리명]: [C_도시소멸지수]}
 ```
 
-![06_Extinction risk area](../images/2022-11-30-Urban Extinction Index/06_Extinction risk area.png)
+![06_Extinction](../../images/2022-11-30-Urban Extinction Index/06_Extinction risk area.png)
 
 - 도시소멸지수 평균은 0.689로 시도명/시도군/읍면동/리 로 구분하여 살펴봄
 - 도시소멸지수 평균 이하는 소멸위험지역으로 나타나고 이상은 정상지역으로 구분할 수 있음
@@ -110,21 +110,21 @@ SUM([가임여성수])/SUM([고령자수])*[H_고령자비율범위]
 
 ## 4. 읍면동 검색기능
 
-![](../images/2022-11-30-Urban Extinction Index/07_search.png)
+![07_search](../../images/2022-11-30-Urban Extinction Index/07_search.png)
 
 - 검색FLAG 만들기
 - 광주광역시 광산구 장덕동 검색 결과 모든 도시소멸지수 평균값이 0.5이상으로 나타나 정상지역임
 
-![08_jangduck](../images/2022-11-30-Urban Extinction Index/08_jangduck.png)
+![08_jangduck](../../images/2022-11-30-Urban Extinction Index/08_jangduck.png)
 
 - 전라남도 나주시 산포면 검색 결과 모든 도시소멸지수 평균값이 0.5이하로 소멸위험지역으로 구분됨 
 
-![09_sanpo](../images/2022-11-30-Urban Extinction Index/09_sanpo.png)
+![09_sanpo](../../images/2022-11-30-Urban Extinction Index/09_sanpo.png)
 
 
 
 ## 5. 대시보드화면
 
-![11_dashboard](../images/2022-11-30-Urban Extinction Index/11_dashboard.png)
+![11_dashboard](../../images/2022-11-30-Urban Extinction Index/11_dashboard.png)
 
-![10_dashboard](../images/2022-11-30-Urban Extinction Index/10_dashboard.gif)
+![10_dashboard](../../images/2022-11-30-Urban Extinction Index/10_dashboard.gif)

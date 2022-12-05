@@ -2,6 +2,7 @@
 
 layout: single
 title:  "[Tableau] 도시소멸지수 구하기-(1)"
+categories : Tableau
 
 ---
 
@@ -9,18 +10,18 @@ title:  "[Tableau] 도시소멸지수 구하기-(1)"
 
 ## 1. 테이블 확인하기 
 
-![01_table](../images/2022-11-30-Extinction risk area/01_table.png)
+![01_table](../../images/2022-11-30-Extinction risk area/01_table.png)
 
-![02_table2](../images/2022-11-30-Extinction risk area/02_table2.png)
+![02_table2](../../images/2022-11-30-Extinction risk area/02_table2.png)
 
 - 데이터를 확인해본 결과 231개 열과 18668개의 행으로 구성되어 있음을 알 수 있다.
 - 각 열은 성별연령별로 각각 나누어져서 측정값으로 구분되어 있다.
 
 ## 2. 피벗 만들기
 
-![03_pivot](../images/2022-11-30-Extinction risk area/03_pivot.png)
+![03_pivot](../../images/2022-11-30-Extinction risk area/03_pivot.png)
 
-![04_pivottable](../images/2022-11-30-Extinction risk area/04_pivottable.png)
+![04_pivottable](../../images/2022-11-30-Extinction risk area/04_pivottable.png)
 
 - 피벗함수를 사용할 열을 선택하여 피벗 테이블을 만들어 준다.
 - 피벗필드명과 피벗 필드값 열이 생성됨을 볼 수 있다.
@@ -44,7 +45,7 @@ REGEXP_MATCH(문자열, 패턴)
 
 - 정규화 함수를 통하여 C_연령, C_성별 필드를 새로 생성하였다. 
 
-![05_age sex](../images/2022-11-30-Extinction risk area/05_age sex.png)
+![05_age sex](../../images/2022-11-30-Extinction risk area/05_age sex.png)
 
 ## 4. 가임여성과 고령자 구분하기
 
@@ -76,7 +77,7 @@ RANK_UNIQUE([C_가임여성비율])
 
 ```
 
-![06_women](../images/2022-11-30-Extinction risk area/06_women.png)
+![06_women](../../images/2022-11-30-Extinction risk area/06_women.png)
 
 ### 고령자 구분
 
@@ -95,7 +96,7 @@ SUM([고령자수]) / SUM([피벗 필드 값])
 RANK_UNIQUE([C_고령자수비율])
 ```
 
-![07_oldman](../images/2022-11-30-Extinction risk area/07_oldman.png)
+![07_oldman](../../images/2022-11-30-Extinction risk area/07_oldman.png)
 
 ## 5. 도시소멸지수 구하기(시도, 시군구)
 
@@ -107,10 +108,10 @@ SUM([가임여성수])/SUM([고령자수])
 [C_도시소멸지수] < 0.5
 ```
 
-![08_Extinction risk area](../images/2022-11-30-Extinction risk area/08_Extinction risk area.gif)
+![08_Extinction risk area](../../images/2022-11-30-Extinction risk area/08_Extinction risk area.gif)
 
 
 
 ## 6. 대시보드화면
 
-![09_dashboard](../images/2022-11-30-Extinction risk area/09_dashboard-9769784.png)
+![09_dashboard](../../images/2022-11-30-Extinction risk area/09_dashboard-9769784.png)
