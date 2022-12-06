@@ -66,6 +66,7 @@ bing_site_verification   :
 yandex_site_verification :
 naver_site_verification  : "a7d68172256cf105c194f9add5a20c9ad9a0ec0a"
 
+
 # Social Sharing
 twitter:
   username               : "mmistakes"
