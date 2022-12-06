@@ -5,6 +5,9 @@ title:  "[Tableau] 도시소멸지수 구하기-(1)"
 categories : Tableau
 tags : [도시소멸, 소멸지수, 소멸위험지역]
 toc : true
+author_profile : false
+sidebar :
+   nav  : "docs"
 ---
 
 
