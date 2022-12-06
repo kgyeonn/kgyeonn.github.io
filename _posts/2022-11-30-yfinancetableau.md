@@ -2,6 +2,8 @@
 layout : single
 title : "[Tableau] 미국주식데이터 시각화하기-(2)"
 categories : Tableau
+tags : 미국주식
+toc : true
 ---
 
 
