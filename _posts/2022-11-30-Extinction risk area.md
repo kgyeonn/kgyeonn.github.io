@@ -33,18 +33,23 @@ sidebar :
 ## 3. 피벗필드명 데이터 정규화
 
 ```sql
- # REGEXP_EXTRACT(문자열, 패턴) 
- # ex) REGEXP_EXTRACT(’abc 123’, ‘[a-z]+\s+(\d+)’) = ‘123’
+#REGEXP_EXTRACT(문자열, 패턴)
+#ex) REGEXP_EXTRACT(’abc 123’, ‘[a-z]+\s+(\d+)’) = ‘123’
  
- REGEXP_EXTRACT(문자열, 패턴)** 예 : REGEXP_EXTRACT(’abc 123’, ‘[a-z]+\s+(\d+)’) = ‘123’
+#C_연령 계산필드 만들기
+REGEXP_EXTRACT([피벗 필드명], '(\d+)' )
 ```
 
 ```sql
 # REGEXP_MATCH(문자열, 패턴) 
 # ex) REGEXP_MATCH(’-([1234].[The.Market ])-’, ‘\[\s*(\w*\.)(\w*\s*\])’) = true
 
-REGEXP_MATCH(문자열, 패턴)
-예 : REGEXP_MATCH(’-([1234].[The.Market ])-’, ‘\[\s*(\w*\.)(\w*\s*\])’) = true
+# C_성별 계산필드 만들기
+IF 
+REGEXP_MATCH([피벗 필드명], "남자") THEN "남성"
+ELSEIF 
+REGEXP_MATCH([피벗 필드명], "여자") THEN "여성"
+END
 ```
 
 - 정규화 함수를 통하여 C_연령, C_성별 필드를 새로 생성하였다. 
