@@ -1,11 +1,9 @@
 ---
-
 layout : single
 title : "[Python] 논문데이터 수집"
 categories : Python
 tags : openAPI, 논문
 toc : true
-
 ---
 
 
@@ -147,10 +145,13 @@ from urllib import parse
 import requests
 
 target="ARTI"
-clientID = "발급받은 client_id를 입력하세요"
-accessToken = "발급받은 accessToken을 입력하세요"
+clientID = "711fb02bbe0f4a387665f7e116919e5e969686bca39006fa2483973f7c0b9dd2"
+accessToken = "02d118b7e7d092ed492728ff7676ac0ec5c37ac689a5b6b481ea02e5c72755b6"
+rowcount = '100' #최대100개
+
 
 if __name__=='__main__':
+    
 
     """
     검색어를 인코딩 합니다.
@@ -164,7 +165,8 @@ if __name__=='__main__':
     "&version=1.0"+
     "&action=search"+
     "&target="+target+
-    "&searchQuery="+query)
+    "&searchQuery="+query+
+    "&rowCount="+rowcount)
 
     """ 검색할 쿼리를 입력하여 논문 검색 api에 request를 요청하고 response를 받는다. """
     response=requests.get(target_URL)
@@ -198,7 +200,7 @@ len(rows)
 ```
 
 
-    10
+    100
 
 ![01_rows](../../images/2022-12-14-Collecting thesis/01_rows.png)
 
@@ -263,23 +265,11 @@ len(value_list[0])
 ```
 
 
-    array(['DIKO0015787391', 'DIKO0015661177', 'DIKO0015894610',
-           'DIKO0015505973', 'DIKO0015344861', 'ART001151721',
-           'DIKO0016391261', 'DIKO0015099277', 'JAKO202228654525691',
-           'DIKO0016385236'], dtype=object)
-
-
 ```python
 # AB : 도시소멸 
 도시소멸 = pd.DataFrame(value_list, columns = row_list)
 도시소멸['CN'].unique()
 ```
-
-
-    array(['ART001035286', 'ART000933852', 'ART001244235',
-           'JAKO202228654525691', 'DIKO0015787391', 'JAKO201714563379928',
-           'DIKO0011778341', 'ART001272159', 'DIKO0015654685',
-           'DIKO0015099277'], dtype=object)
 
 
 ```python
@@ -289,61 +279,55 @@ df.info()
 ```
 
     <class 'pandas.core.frame.DataFrame'>
-    Int64Index: 17 entries, 0 to 16
+    Int64Index: 192 entries, 0 to 191
     Data columns (total 25 columns):
      #   Column          Non-Null Count  Dtype 
     ---  ------          --------------  ----- 
-     0   CN              17 non-null     object
-     1   DB코드            17 non-null     object
-     2   저널제어번호          17 non-null     object
-     3   출판사(발행기관)       17 non-null     object
-     4   저널명             17 non-null     object
-     5   ISSN            17 non-null     object
-     6   ISBN            17 non-null     object
-     7   권호Id            17 non-null     object
-     8   권번호             17 non-null     object
-     9   호번호             17 non-null     object
-     10  발행년             17 non-null     object
-     11  소장정보유무          17 non-null     object
-     12  논문제어번호          17 non-null     object
-     13  논문명             17 non-null     object
-     14  초록              17 non-null     object
-     15  저자              17 non-null     object
-     16  원문유무            17 non-null     object
-     17  초록유무            17 non-null     object
-     18  페이지정보           17 non-null     object
-     19  DOI             17 non-null     object
-     20  원문URL           17 non-null     object
-     21  ScienceON상세링크   17 non-null     object
-     22  ScienceON모바일링크  17 non-null     object
-     23  키워드             17 non-null     object
-     24  학위구분            17 non-null     object
+     0   CN              192 non-null    object
+     1   DB코드            192 non-null    object
+     2   저널제어번호          192 non-null    object
+     3   출판사(발행기관)       192 non-null    object
+     4   저널명             192 non-null    object
+     5   ISSN            192 non-null    object
+     6   ISBN            192 non-null    object
+     7   권호Id            192 non-null    object
+     8   권번호             192 non-null    object
+     9   호번호             192 non-null    object
+     10  발행년             192 non-null    object
+     11  소장정보유무          192 non-null    object
+     12  논문제어번호          192 non-null    object
+     13  논문명             192 non-null    object
+     14  초록              192 non-null    object
+     15  저자              192 non-null    object
+     16  원문유무            192 non-null    object
+     17  초록유무            192 non-null    object
+     18  페이지정보           192 non-null    object
+     19  DOI             192 non-null    object
+     20  원문URL           192 non-null    object
+     21  ScienceON상세링크   192 non-null    object
+     22  ScienceON모바일링크  192 non-null    object
+     23  키워드             192 non-null    object
+     24  학위구분            192 non-null    object
     dtypes: object(25)
-    memory usage: 3.5+ KB
+    memory usage: 39.0+ KB
 
 ```python
-df['초록']
+df['초록'][0]
 ```
 
 
-    0     본 연구의 목적은 지방소멸위험지수를 활용하여 전국 시·군·구의 소멸위험을 거시적으로...
-    1     본 연구는 현재 우리나라에서 가장 심각하게 사회 및 경제적으로 부각되고 있는 인구감...
-    2     본 논문은 어촌 지역사회의 당면한 문제들을 토대로 지속가능한 내생적 개발의 관점에서...
-    3     2005년부터 본격화된 정부의 출산장려 정책에도 불구하고 2018년 우리나라의 합계...
-    4     본 연구는 기술보증기금의 기술사업성 평가자료를 활용하여 1인 창조기업의 경영역량과 ...
-    5     우선 이 논문은 극동의 사상을 접한 서양 철학자들이 어떠한 곤란함에 처해있는가에 대...
-    6     현재 글로벌 금융환경은 코로나19 후유증 및 우크라이나-러시아 전쟁으로 인한 인플레...
-    7     최근 선진국들을 중심으로 ‘인구 절벽’의 문제가 대두되고 있다. 우리나라도 지방 도...
-    8     최근 우리나라는 인구감소 문제를 겪으며 기존의 외연적 확산을 지향하는 개발방식은 주...
-    9     WTO, FTA와 같은 거센 개방화 물결로 커져가는 농업계의 위기와, 2020년 도...
-    10    과거 하천 수변의 제방 구역에 수림을 조성한 사례는 전국 하천에서 고르게 분포하고 ...
-    11    우리나라 농업은 멀지 않아 붕괴될 위기에 직면해 있다. 농업의 붕괴는 농촌과 도시 ...
-    12    이 논문은 골목길이라는 공간소(素)가 최근의 한국 사회에서 새로운 미학적 풍경으로 ...
-    13    본 연구는 정보기술과 환경기술의 미래도시 메커니즘(Mechanism) 구조와 그에 ...
-    14    본 논문은 본인의 작업〈 소멸 : 망각 〉을 중심으로 하는 작품론이다. 이 작업은 ...
-    15    프랑스 사회 변화에 대한 이와 같은 견해는 이해, 사유, 의사소통의 방식에 영향을 ...
-    16    저출산, 고령화 등에 따른 인구감소는 공공시설 및 서비스의 질 저하와 지역 환경악화...
-    Name: 초록, dtype: object
+    0      본 연구의 목적은 지방소멸위험지수를 활용하여 전국 시·군·구의 소멸위험을 거시적으로...
+    1      본 연구는 현재 우리나라에서 가장 심각하게 사회 및 경제적으로 부각되고 있는 인구감...
+    2      본 논문은 어촌 지역사회의 당면한 문제들을 토대로 지속가능한 내생적 개발의 관점에서...
+    3      2005년부터 본격화된 정부의 출산장려 정책에도 불구하고 2018년 우리나라의 합계...
+    4      본 연구는 기술보증기금의 기술사업성 평가자료를 활용하여 1인 창조기업의 경영역량과 ...
+                                 ...                        
+    187    본 연구는 지방에 소재한 대학의 지역사회 협력 방안을 제시하고자 한다. 한국의 지방...
+    188    본 연구는 무분별하게 형성되어 복잡해 보이는 지역이라 하더라도 지역의 공간구조를 인...
+    189    우리나라는 대기오염물질 저감을 위해 청정연료 사용, 배출허용기준 강화 등 다양한 정...
+    190    최근 인구감소와 고령화에 따른 생산인구의 감소는 다양한 경제적·사회적 문제들을 야기...
+    191    도시공간에 있어 오랜 시간 동안 도시공간에 축적되어온 역사 환경과 문화적 요소들은 ...
+    Name: 초록, Length: 192, dtype: object
 
 
 
