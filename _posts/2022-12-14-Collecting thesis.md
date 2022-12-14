@@ -1,3 +1,19 @@
+---
+
+layout : single
+title : "[Python] 논문데이터 수집"
+categories : Python
+tags : openAPI, 논문
+toc : true
+
+---
+
+
+
+> 논문 데이터를 수집하기 위해  [사이언스온](https://scienceon.kisti.re.kr/apigateway/api/main/mainForm.do) 사이트에서 openAPI 인증키 발급을 받은 후 사용하였다.
+
+ 
+
 # 라이브러리 불러오기
 
 
@@ -63,12 +79,10 @@ import json
 
 
 ################################################### 사용자 정보 입력 #####################################################
-# 맥주소 입력하세요.
-MAC_address = "F0-18-98-86-63-B4"
-# 발급받은 client_id를 입력하세요.
-clientID = "711fb02bbe0f4a387665f7e116919e5e969686bca39006fa2483973f7c0b9dd2"
-# 발급받은 인증키를 입력해주세요.
-key = "38a13e8131ca4c69bb89f9eda30775ce"
+
+MAC_address = "맥주소 입력하세요"
+clientID = "발급받은 client_id를 입력하세요"
+key = "발급받은 인증키를 입력해주세요."
 #######################################################################################################################
 time = ''.join(re.findall("\d", datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
 plain_txt = json.dumps({"datetime": time, "mac_address": MAC_address}).replace(" ", "")
@@ -118,14 +132,11 @@ def regenerateToken():
 
 
 # 함수 호출
-generateToken()
+generateToken() # 토큰키 발급 
 
 
 ```
 
-    {"access_token":"8a23b91d2211970a23e6f9d998d8cf8e8ab6ffb4b258a296c67ce0ff199af927","refresh_token":"293c44f188a5b3abfc27f3db167947d5aa743a50afd1f92c2ad24bb8fb645027","refresh_token_expire":"2022-12-28 10:14:51.606","access_token_expire":"2022-12-14 12:14:51.606","issued_at":"2022-12-14 10:14:51.000606","client_id":"711fb02bbe0f4a387665f7e116919e5e969686bca39006fa2483973f7c0b9dd2"}
-    293c44f188a5b3abfc27f3db167947d5aa743a50afd1f92c2ad24bb8fb645027
-    8a23b91d2211970a23e6f9d998d8cf8e8ab6ffb4b258a296c67ce0ff199af927
 
 
 ## OpenAPI
@@ -136,8 +147,8 @@ from urllib import parse
 import requests
 
 target="ARTI"
-clientID = "711fb02bbe0f4a387665f7e116919e5e969686bca39006fa2483973f7c0b9dd2"
-accessToken = "8a23b91d2211970a23e6f9d998d8cf8e8ab6ffb4b258a296c67ce0ff199af927"
+clientID = "발급받은 client_id를 입력하세요"
+accessToken = "발급받은 accessToken을 입력하세요"
 
 if __name__=='__main__':
 
@@ -390,7 +401,3 @@ df['초록']
 df.to_csv('./AB_소멸위험_도시소멸.csv', encoding='utf-8-sig')
 ```
 
-
-```python
-
-```
