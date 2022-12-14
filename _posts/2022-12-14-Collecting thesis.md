@@ -200,7 +200,7 @@ len(rows)
 
     10
 
-![01_rows](../images/2022-12-14-Collecting thesis/01_rows.png)
+![01_rows](../../images/2022-12-14-Collecting thesis/01_rows.png)
 
 ## 2.1 컬럼명 파싱하기
 
@@ -230,7 +230,7 @@ row_list
 rows[0].text.split('\n')
 ```
 
-![02_data parsing](../images/2022-12-14-Collecting thesis/02_data parsing.png)
+![02_data parsing](../../images/2022-12-14-Collecting thesis/02_data parsing.png)
 
 
 ```python
@@ -249,7 +249,7 @@ len(value_list[0])
 
     25
 
-![03_value_list](../images/2022-12-14-Collecting thesis/03_value_list.png)
+![03_value_list](../../images/2022-12-14-Collecting thesis/03_value_list.png)
 
 ## 2.3 데이터 프레임
 
