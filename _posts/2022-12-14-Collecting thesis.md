@@ -14,7 +14,7 @@ toc : true
 
  
 
-# 라이브러리 불러오기
+# 1. 라이브러리 불러오기
 
 
 ```python
@@ -25,7 +25,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 ```
 
-## AES256 Util 설치
+## 1.1 AES256 Util 설치
 
 
 ```python
@@ -66,7 +66,7 @@ class AESTestClass:
 
 ```
 
-## 토큰 발급
+## 1.2 토큰 발급
 
 
 ```python
@@ -139,7 +139,7 @@ generateToken() # 토큰키 발급
 
 
 
-## OpenAPI
+## 1.3 OpenAPI
 
 
 ```python
@@ -171,7 +171,7 @@ if __name__=='__main__':
     context = response.text
 ```
 
-# 파싱하기
+# 2. 파싱하기
 
 
 ```python
@@ -200,7 +200,9 @@ len(rows)
 
     10
 
-## 컬럼명 파싱하기
+![01_rows](../images/2022-12-14-Collecting thesis/01_rows.png)
+
+## 2.1 컬럼명 파싱하기
 
 
 ```python
@@ -216,69 +218,19 @@ row_list
 ```
 
 
-    ['CN',
-     'DB코드',
-     '저널제어번호',
-     '출판사(발행기관)',
-     '저널명',
-     'ISSN',
-     'ISBN',
-     '권호Id',
-     '권번호',
-     '호번호',
-     '발행년',
-     '소장정보유무',
-     '논문제어번호',
-     '논문명',
-     '초록',
-     '저자',
-     '원문유무',
-     '초록유무',
-     '페이지정보',
-     'DOI',
-     '원문URL',
-     'ScienceON상세링크',
-     'ScienceON모바일링크',
-     '키워드',
-     '학위구분']
+    ['CN','DB코드','저널제어번호','출판사(발행기관)','저널명','ISSN','ISBN','권호Id','권번호','호번호','발행년','소장정보유무','논문제어번호','논문명','초록','저자',
+     '원문유무','초록유무','페이지정보','DOI','원문URL','ScienceON상세링크','ScienceON모바일링크','키워드','학위구분']
 
 
 
-## 데이터 파싱하기
+## 2.2 데이터 파싱하기
 
 
 ```python
 rows[0].text.split('\n')
 ```
 
-
-    ['',
-     'ART001035286',
-     'JAKO',
-     'NJOU0000null',
-     '한국전통조경학회',
-     '한국전통조경학회지',
-     ';;',
-     ' ',
-     ' ',
-     '영문',
-     '4',
-     '2006',
-     ' ',
-     'ART001035286',
-     '도시지역의 전통 제방 인공림 복원에 관한 연구',
-     '과거 하천 수변의 제방 구역에 수림을 조성한 사례는 전국 하천에서 고르게 분포하고 있어서 수림이 제방의 안정 및 수해 방지에 긍정적 효과가 있음은 믿어 의심치 않고 있다. 그럼에도 불구하고 과거 대부분의 도시 지역에 조성되었던 전통 제방 인공림은 하천 정비 사업, 경지 정리 사업, 도로 개발 등의 근대화 과정에서 대부분 소멸되었고, 이제는 제방 인공림을 발견하기가 쉽지 않은 상황이다. 따라서 본 연구는 과거 도시 지역에 조성되었던 전통 제방 인공림을 대상으로 연구의 중요성을 제고하고, 제방 인공림의 역사, 잔존하는 대표적 사례 분석 등을 통해 결론적으로는 시급한 복원 대상이 되는 제방 인공림을 제시해 보고자 한다. ',
-     '장동수',
-     '0',
-     '0',
-     'pp.1-7',
-     ' ',
-     ' ',
-     'http://click.ndsl.kr/servlet/OpenAPIDetailView?keyValue=05787966&target=NART&cn=ART001035286',
-     'http://click.ndsl.kr/servlet/OpenAPIDetailView?keyValue=05787966&target=NART&cn=ART001035286&type=mobile',
-     ' ',
-     ' ',
-     '']
+![02_data parsing](../images/2022-12-14-Collecting thesis/02_data parsing.png)
 
 
 ```python
@@ -297,14 +249,15 @@ len(value_list[0])
 
     25
 
+![03_value_list](../images/2022-12-14-Collecting thesis/03_value_list.png)
 
+## 2.3 데이터 프레임
 
-## 데이터 프레임
+- 소멸위험 논문의 수가 적은것같아 도시소멸 논문까지 수집함
 
 
 ```python
 # AB : 소멸위험
-
 소멸위험 = pd.DataFrame(value_list, columns = row_list)
 소멸위험['CN'].unique()
 ```
@@ -394,10 +347,10 @@ df['초록']
 
 
 
-# 데이터 저장
+# 3. 데이터 저장
 
 
 ```python
-df.to_csv('./AB_소멸위험_도시소멸.csv', encoding='utf-8-sig')
+df.to_csv('./AB_소멸위험_도시소멸.csv', encoding='utf-8-sig') #utf-8, cp949, euc-kr 모두 인코딩이 깨져 utf-8-sig해줌 
 ```
 
