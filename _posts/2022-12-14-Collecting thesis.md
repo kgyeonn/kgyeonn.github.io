@@ -1,6 +1,6 @@
 ---
 layout : single
-title : "[Python] 논문데이터 수집"
+title : "[Python] 논문데이터 수집 -(1)"
 categories : Python
 tags : openAPI, 논문
 toc : true
@@ -312,7 +312,7 @@ df.info()
     memory usage: 39.0+ KB
 
 ```python
-df['초록'][0]
+df['초록']
 ```
 
 
