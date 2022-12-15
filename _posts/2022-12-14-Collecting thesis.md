@@ -145,8 +145,8 @@ from urllib import parse
 import requests
 
 target="ARTI"
-clientID = "711fb02bbe0f4a387665f7e116919e5e969686bca39006fa2483973f7c0b9dd2"
-accessToken = "02d118b7e7d092ed492728ff7676ac0ec5c37ac689a5b6b481ea02e5c72755b6"
+clientID = "발급받은 client_id를 입력하세요"
+accessToken = "발급받은 accessToken을 입력하세요"
 rowcount = '100' #최대100개
 
 
