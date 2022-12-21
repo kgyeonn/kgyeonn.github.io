@@ -6,9 +6,9 @@ tags : 텍스트분석, 논문
 toc : true
 ---
 
-<center>*사이언스온에서 수집한 도시소멸지수 논문데이터 텍스트마이닝을 실시하였다.*</center>
+<center><I>사이언스온에서 수집한 도시소멸지수 논문데이터 텍스트마이닝을 실시하였다.</I></center>
 
-<center>*텍스트마이닝은 텍스트 형태로 이루어진 비정형 및 반정형 데이터에 대하여 자연어처리를 이용하여 텍스트로부터 가치와 의미있는 정보를 찾아내는 기술이다.* </center>
+<center><I>텍스트마이닝은 텍스트 형태로 이루어진 비정형 및 반정형 데이터에 대하여 자연어처리를 이용하여 텍스트로부터 가치와 의미있는 정보를 찾아내는 기술이다.</I></center>
 
 ```python
 import os
@@ -46,8 +46,6 @@ df.info()
 
 
 # 1. 컬럼 조회
-
----
 
 ## 1.1 불필요한 컬럼 삭제
 
@@ -159,8 +157,6 @@ morphs[1]
 
 # 3. CountVectorizer
 
----
-
 > CountVectorizer는 단어의 빈도수를 기반 추출 방법 
 
 ## 3.1 빈도분석
@@ -210,9 +206,7 @@ for i in range(len(ab)):
 
 # 4. TfidfVectorizer
 
----
-
-count기반의 특징추출은 단순 빈도만을 계산하기 때문에 조사, 관사처럼 의미는 없지만 문장에 많이 등장하는 단어들을 높게 쳐주기 때문에 유의미한 결과를 얻기 힘들 수 있다. TF-IDF는 이러한 단어들에 일종의 패널티를 줘서 CountVectorizer한계점을 해결할 수 있다. 
+*count기반의 특징추출은 단순 빈도만을 계산하기 때문에 조사, 관사처럼 의미는 없지만 문장에 많이 등장하는 단어들을 높게 쳐주기 때문에 유의미한 결과를 얻기 힘들 수 있다. TF-IDF는 이러한 단어들에 일종의 패널티를 줘서 CountVectorizer한계점을 해결할 수 있다.* 
 
 ```python
 from sklearn.feature_extraction.text import TfidfVectorizer
