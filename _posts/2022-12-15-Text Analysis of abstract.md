@@ -6,7 +6,9 @@ tags : 텍스트분석, 논문
 toc : true
 ---
 
-사이언스온에서 수집한 도시소멸지수 논문데이터 텍스트마이닝을 실시하였다. 텍스트마이닝은 텍스트 형태로 이루어진 비정형 및 반정형 데이터에 대하여 자연어처리를 이용하여 텍스트로부터 가치와 의미있는 정보를 찾아내는 기술이다. 
+<center>*사이언스온에서 수집한 도시소멸지수 논문데이터 텍스트마이닝을 실시하였다.*</center>
+
+<center>*텍스트마이닝은 텍스트 형태로 이루어진 비정형 및 반정형 데이터에 대하여 자연어처리를 이용하여 텍스트로부터 가치와 의미있는 정보를 찾아내는 기술이다.* </center>
 
 ```python
 import os
@@ -39,42 +41,13 @@ df = pd.read_csv('./AB_소멸위험_도시소멸.csv', encoding='utf-8-sig')
 df.info()
 ```
 
-```
-<class 'pandas.core.frame.DataFrame'>
-RangeIndex: 192 entries, 0 to 191
-Data columns (total 25 columns):
- #   Column          Non-Null Count  Dtype 
----  ------          --------------  ----- 
- 0   CN              192 non-null    object
- 1   DB코드            192 non-null    object
- 2   저널제어번호          192 non-null    object
- 3   출판사(발행기관)       192 non-null    object
- 4   저널명             192 non-null    object
- 5   ISSN            192 non-null    object
- 6   ISBN            192 non-null    object
- 7   권호Id            192 non-null    object
- 8   권번호             192 non-null    object
- 9   호번호             192 non-null    object
- 10  발행년             192 non-null    int64 
- 11  소장정보유무          192 non-null    object
- 12  논문제어번호          192 non-null    object
- 13  논문명             192 non-null    object
- 14  초록              192 non-null    object
- 15  저자              192 non-null    object
- 16  원문유무            192 non-null    int64 
- 17  초록유무            192 non-null    int64 
- 18  페이지정보           192 non-null    object
- 19  DOI             192 non-null    object
- 20  원문URL           192 non-null    object
- 21  ScienceON상세링크   192 non-null    object
- 22  ScienceON모바일링크  192 non-null    object
- 23  키워드             192 non-null    object
- 24  학위구분            192 non-null    object
-dtypes: int64(3), object(22)
-memory usage: 37.6+ KB
-```
+![12_before](../../images/2022-12-15-Text Analysis of abstract/12_before.png)
+
+
 
 # 1. 컬럼 조회
+
+---
 
 ## 1.1 불필요한 컬럼 삭제
 
@@ -91,23 +64,7 @@ df.drop(del_col, axis=1, inplace=True)
 df.info()
 ```
 
-```
-<class 'pandas.core.frame.DataFrame'>
-RangeIndex: 192 entries, 0 to 191
-Data columns (total 8 columns):
- #   Column     Non-Null Count  Dtype 
----  ------     --------------  ----- 
- 0   CN         192 non-null    object
- 1   DB코드       192 non-null    object
- 2   저널제어번호     192 non-null    object
- 3   출판사(발행기관)  192 non-null    object
- 4   발행년        192 non-null    int64 
- 5   논문명        192 non-null    object
- 6   초록         192 non-null    object
- 7   키워드        192 non-null    object
-dtypes: int64(1), object(7)
-memory usage: 12.1+ KB
-```
+![13_after](../../images/2022-12-15-Text Analysis of abstract/13_after.png)
 
 ```python
 plt.figure(figsize=(15,5))
@@ -115,17 +72,6 @@ sns.countplot(x='DB코드', data=df)
 ```
 
 ![output_8_1](../../images/2022-12-15-Text Analysis of abstract/output_8_1.png)
-
-```python
-df['DB코드'].value_counts()
-```
-
-```
-DIKO    127
-JAKO     45
-CFKO     20
-Name: DB코드, dtype: int64
-```
 
 > DIKO : 학외논문 / JAKO : 국내논문 / CFKO : 학술회의 
 
@@ -207,11 +153,13 @@ morphs[1]
 
 ![05_morphs](../../images/2022-12-15-Text Analysis of abstract/05_morphs.png)
 
-> **형태소는 불필요한 단어까지 추출하기 때문에 명사추출을 사용함**
+> 형태소는 불필요한 단어까지 추출하기 때문에 명사추출을 사용함
 
 
 
 # 3. CountVectorizer
+
+---
 
 > CountVectorizer는 단어의 빈도수를 기반 추출 방법 
 
@@ -261,6 +209,8 @@ for i in range(len(ab)):
 
 
 # 4. TfidfVectorizer
+
+---
 
 count기반의 특징추출은 단순 빈도만을 계산하기 때문에 조사, 관사처럼 의미는 없지만 문장에 많이 등장하는 단어들을 높게 쳐주기 때문에 유의미한 결과를 얻기 힘들 수 있다. TF-IDF는 이러한 단어들에 일종의 패널티를 줘서 CountVectorizer한계점을 해결할 수 있다. 
 
