@@ -6,3 +6,326 @@ tags : 텍스트분석, 논문
 toc : true
 ---
 
+```python
+import os
+import re
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import rc 
+import seaborn as sns
+
+rc('font', family='AppleGothic') 
+plt.rcParams['axes.unicode_minus'] = False  
+
+pd.set_option('display.max.rows',1000)
+pd.set_option('mode.chained_assignment', None) #오류제거
+
+import warnings
+warnings.simplefilter('ignore')
+```
+
+```python
+from konlpy.tag import Mecab, Okt, Kkma
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from nltk.corpus import stopwords
+from collections import Counter
+```
+
+```python
+df = pd.read_csv('./AB_소멸위험_도시소멸.csv', encoding='utf-8-sig')
+df.info()
+```
+
+```
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 192 entries, 0 to 191
+Data columns (total 25 columns):
+ #   Column          Non-Null Count  Dtype 
+---  ------          --------------  ----- 
+ 0   CN              192 non-null    object
+ 1   DB코드            192 non-null    object
+ 2   저널제어번호          192 non-null    object
+ 3   출판사(발행기관)       192 non-null    object
+ 4   저널명             192 non-null    object
+ 5   ISSN            192 non-null    object
+ 6   ISBN            192 non-null    object
+ 7   권호Id            192 non-null    object
+ 8   권번호             192 non-null    object
+ 9   호번호             192 non-null    object
+ 10  발행년             192 non-null    int64 
+ 11  소장정보유무          192 non-null    object
+ 12  논문제어번호          192 non-null    object
+ 13  논문명             192 non-null    object
+ 14  초록              192 non-null    object
+ 15  저자              192 non-null    object
+ 16  원문유무            192 non-null    int64 
+ 17  초록유무            192 non-null    int64 
+ 18  페이지정보           192 non-null    object
+ 19  DOI             192 non-null    object
+ 20  원문URL           192 non-null    object
+ 21  ScienceON상세링크   192 non-null    object
+ 22  ScienceON모바일링크  192 non-null    object
+ 23  키워드             192 non-null    object
+ 24  학위구분            192 non-null    object
+dtypes: int64(3), object(22)
+memory usage: 37.6+ KB
+```
+
+# 1. 컬럼 조회
+
+## 1.1 불필요한 컬럼 삭제
+
+```python
+del_col = ['저널명','ISSN','ISBN','권호Id','권번호','호번호','소장정보유무','논문제어번호','저자',
+           '원문유무','초록유무','페이지정보','DOI','원문URL','ScienceON상세링크','ScienceON모바일링크','학위구분']
+```
+
+```python
+df.drop(del_col, axis=1, inplace=True)
+```
+
+```python
+df.info()
+```
+
+```
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 192 entries, 0 to 191
+Data columns (total 8 columns):
+ #   Column     Non-Null Count  Dtype 
+---  ------     --------------  ----- 
+ 0   CN         192 non-null    object
+ 1   DB코드       192 non-null    object
+ 2   저널제어번호     192 non-null    object
+ 3   출판사(발행기관)  192 non-null    object
+ 4   발행년        192 non-null    int64 
+ 5   논문명        192 non-null    object
+ 6   초록         192 non-null    object
+ 7   키워드        192 non-null    object
+dtypes: int64(1), object(7)
+memory usage: 12.1+ KB
+```
+
+```python
+plt.figure(figsize=(15,5))
+sns.countplot(x='DB코드', data=df)
+```
+
+![output_8_1](../../images/2022-12-15-Text Analysis of abstract/output_8_1.png)
+
+```python
+df['DB코드'].value_counts()
+```
+
+```
+DIKO    127
+JAKO     45
+CFKO     20
+Name: DB코드, dtype: int64
+```
+
+- DIKO : 학외논문 / JAKO : 국내논문 / CFKO : 학술회의 
+
+```python
+plt.figure(figsize=(20,8))
+sns.countplot(x='발행년', data=df)
+```
+
+![output_11_1](../../images/2022-12-15-Text Analysis of abstract/output_11_1.png)
+
+```python
+ab = df['초록']
+```
+
+```python
+ab[1]
+```
+
+```
+'본 연구는 현재 우리나라에서 가장 심각하게 사회 및 경제적으로 부각되고 있는 인구감소에 따른 지방자치단체 인구구조의 변화가 지방재정 건전성에 미치는 영향을 분석하고 이에 따른 지방소멸위험 지역에 대하여 지방재정 건전성에 어떠한 영향을 미치는지에 대하여 연구하였다. 또한, 지방재정 건전성 및 지방소멸위험 지역의 발전을 위해 외국인주민 및 20∼39세 여성, 사회복지예산비중에 대하여 같이 연구하였다.&amp;#xD; 그리고 지방자치단체 인구구조의 변화 및 저출산·고령화 문제로 소멸 위기에 있는 지방자치단체의 수가 지속해서 증가하고 있어, 이 부분 또한 인구구조의 변화 문제로 인식하고 같이 분석하였다.&amp;#xD; 지방자치단체 인구구조 변화가 지방재정 건전성에 영향이 미치는 영향을 분석하기 위하여 종속변수로는 주민1인당 자체수입액, 주민1인당 세출예산액, 재정자립도, 총자산대비 총부채 비율을 사용하였으며, 독립변수로는 합계출산율, 생산가능인구, 노령화지수, 지방소멸위험 지수를 사용하였다. 또한, 통제변수로는 외국인주민 수, 20∼39세 여성인구, 사회복지예산비중, 주민1인당면적을 이용하여 시·군·자치구의 유형별로 분류하여 2012∼2018(7년) 기간 동안 지방자치단체 226개를 10개의 유형 자치단체로 구분하여 Panel data를 활용해 실증 분석하였다. &amp;#xD; 본 연구 결과는 아래와 같다. 첫째, 세입 관련 주민1인당 자체수입액에 대한 합계출산율에 대하여 군 및 자치구는 부(-)의 영향 및 유의성이 없는 경향으로, 시는 정(+)의 유의한 영향을 미치는 것으로 분석되었으며, 지방자치단체 전체는 대하여 생산가능인구, 노령화지수, 지방소멸위험 지수에 대하여 부(-)의 유의한 영향을 미치는 것으로 분석되었다.&amp;#xD; 둘째, 세출 관련 주민1인당 세출예산에 대한 합계출산율에 대하여 군은 정(+)의 유의성을 가지며, 자치구 및 시는 부(-)의 유의성으로 분석되었다. 생산가능인구는 대부분 부(-)의 유의성을, 노령화지수는 대부분 정(+)의 유의성으로 분석되었으며, 지방소멸위험 지수는 군은 유의성이 없는 것으로, 자치구·시는 부(-)의 유의성으로 분석되었다.&amp;#xD; 셋째, 재정자립도에 대한 합계출산율에 대하여 군·자치구는 부(-)의 유의성을 가지며, 시는 정(+)의 유의성으로 분석되었다. 생산가능인구에 대하여 군·자치구는 대부분 유의성이 없는 것으로 분석되었으며, 시는 부(-)의 유의성을, 노령화지수는 모두 부(-)의 유의성으로 분석되었으며, 지방소멸위험 지수는 대부분 정(+)의 유의성을 가지는 것으로 분석되었다.&amp;#xD; 넷째, 총자산대비 총부채 비율에 대한 합계출산율에 대하여 지방자치단체 전체는 정(+)의 유의성을, 시는 유의성이 없는 것으로 분석되었다. 생산가능인구에 대하여 지방자치단체 전체 및 시는 정(+)의 유의성을, 군은 유의성이 없는 것으로, 구는 부(-)의 유의성이 있는 것으로 분석되었다. 노령화지수에 대하여 지방자치단체 전체, 군 전체, 시-Ⅱ는 부(-)의 유의성을, 그리고 지방소멸위험 지수에 대하여서는 지방자치단체 전체 및 군에 대하여 정(+)이 유의한 영향을 미친 것으로 분석되었다. &amp;#xD; 마지막으로 지방소멸위험 지역에 대한 개선책으로 자체재원 확대, 이에 따른 지방자치단체에 대한 자율성 및 책임성 확보, 세입에 따른 국세-지방세 구조를 현재 8:2 비율에서 7:3으로 변경하는 것이 있다. 또한, 사회복지 개념의 국가 공통 운영비용에 대한 이전재원에 대하여 별도 운영하는 것이 합리적이라 생각한다. &amp;#xD; 인구구조의 변화로 인하여, 지방자치단체 소멸지역의 수가 확대되는 상황이다. 지방소멸 지역으로의 인구 유입, 세입·세출의 예산 확보 및 자율성에 따른 책임성 확보, 그리고 국가 차원에서의 이전재원 별도 지원을 통해 다 같이 행복한 국가가 될 수 있도록 나아가는데 본 연구 결과가 많은 활용이 되었으면 한다.'
+```
+
+> &amp;#xD; 등 불필요한 문자를 제거해 주는 정규화 작업이 필요함 
+
+
+
+# 2. Mecab
+
+## 2.1 특수문자 제거하기
+
+```python
+import re
+compile = re.compile("[^ ㄱ-ㅣ가-힣]+")
+for i in range(len(ab)):
+
+    a = compile.sub("",ab[i])
+    ab[i] = a
+```
+
+![03_print(ab)](../../images/2022-12-15-Text Analysis of abstract/03_print(ab)-1602646.png)
+
+
+
+## 2.2 형태소 분석
+
+- 형태소 분석이란 형태소를 비롯하여 어근, 접두사/접미사, 품사태깅(POS)등 다양한 언어적 속성의 구조를 파악하는 것이다. 
+
+### 2.1.1 명사추출 nouns
+
+```python
+mecab = Mecab()
+
+nouns = []
+for i in range(len(ab)):
+    nouns.append(' '.join([word for word in mecab.nouns(ab[i])
+                           if len(word)>1]))
+```
+
+```python
+nouns[1]
+```
+
+![04_nouns](../../images/2022-12-15-Text Analysis of abstract/04_nouns.png)
+
+
+
+### 2.2.2 형태소 추출 morphs
+
+```python
+mecab = Mecab()
+
+morphs = []
+for i in range(len(ab)):
+    morphs.append(' '.join([word for word in mecab.morphs(ab[i])
+                           if len(word)>1]))
+```
+
+```python
+morphs[1]
+```
+
+![05_morphs](../../images/2022-12-15-Text Analysis of abstract/05_morphs.png)
+
+> **형태소는 불필요한 단어까지 추출하기 때문에 명사추출을 사용함**
+
+
+
+# 3. CountVectorizer
+
+- CountVectorizer는 단어의 빈도수를 기반 추출 방법 
+
+## 3.1 빈도분석
+
+```python
+from sklearn.feature_extraction.text import CountVectorizer
+
+CV = CountVectorizer()
+cntvec = CV.fit_transform(nouns)
+cntvec
+```
+
+```python
+CV = CountVectorizer()
+cntvec = CV.fit_transform(nouns)
+cntvec_df = pd.DataFrame(cntvec.toarray(), columns=CV.get_feature_names())
+csv_CV = pd.DataFrame(cntvec_df.sum().sort_values(ascending=False))
+```
+
+![06_csv_CV](../../images/2022-12-15-Text Analysis of abstract/06_csv_CV.png)
+
+
+
+## 3.2 불용어 처리
+
+- 문장에 불필요한 단어를 불용어라고 한다. 이 과정을 통해 키워드의 품질을 높일 수 있다. 
+
+```python
+stop_words = csv_CV[csv_CV[0]==1]
+```
+
+![07_stop_words](../../images/2022-12-15-Text Analysis of abstract/07_stop_words.png)
+
+> **한번 언급된 단어들은 중요하지 않다고 판단되어 불용어 처리함**
+
+```python
+mecab = Mecab()
+
+nouns = []
+for i in range(len(ab)):
+    nouns.append(' '.join([word for word in mecab.nouns(ab[i]) #명사추출
+                           if word not in stop_words #불용어제거
+                           if len(word)>1])) #1글자 단어 제거 
+```
+
+
+
+# 4. TfidfVectorizer
+
+- count기반의 특징추출은 단순 빈도만을 계산하기 때문에 조사, 관사처럼 의미는 없지만 문장에 많이 등장하는 단어들을 높게 쳐주기 때문에 유의미한 결과를 얻기 힘들 수 있다. TF-IDF는 이러한 단어들에 일종의 패널티를 줘서 CountVectorizer한계점을 해결할 수 있다. 
+
+```python
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+TV = TfidfVectorizer()
+tfidfvec = TV.fit_transform(nouns)
+tfidfvec
+```
+
+```
+<192x4667 sparse matrix of type '<class 'numpy.float64'>'
+	with 19788 stored elements in Compressed Sparse Row format>
+```
+
+> 192x4667은 192는 행의 개수 4667은 단어의 개수를 의미함
+
+```python
+tfidfvec.toarray()[0]
+```
+
+```
+array([0.        , 0.        , 0.06146696, ..., 0.        , 0.        ,
+       0.06821469])
+```
+
+- Toarray()함수를 통해 문서 내의 단어가 등장한 횟수에 따라 값이 부여된 것을 볼 수 있다. 
+
+```python
+TV.vocabulary_
+```
+
+![08_vocabulary](../../images/2022-12-15-Text Analysis of abstract/08_vocabulary.png)
+
+- Vacabulary_ 를 통해 객체가 가지고 있는 정보를 확인할 수 있다. dictionary형태의 값을 가지게 되는데, 각 value가 의미하는 칼럼의 위치가 되고 key는 해당 컬럼의 단어를 의미한다. 
+- "연구"는 행렬의 2625번째 컬럼을 의미한다. 
+
+```python
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+TV = TfidfVectorizer(ngram_range=(2,2)) #ngram : 바이그램 모형을 사용하여 2개의 연속된 단어묶음 추출
+tfidfvec = TV.fit_transform(nouns)
+tfidfvec_df = pd.DataFrame(tfidfvec.toarray(), columns=TV.get_feature_names())
+csv_TV = pd.DataFrame(tfidfvec_df.sum().sort_values(ascending=False))
+csv_TV
+```
+
+![09_csv_TV](../../images/2022-12-15-Text Analysis of abstract/09_csv_TV.png)
+
+```python
+a = csv_TV.reset_index()
+a['first'] = a['index'].apply(lambda x : x.split(' ')[0])
+a['last'] = a['index'].apply(lambda x : x.split(' ')[1])
+csv_TV = a[a['first']!=a['last']]
+```
+
+- 앞뒤 같은 경우를 방지하기 위해 같은 단어들은 모두 제거함 
+
+```python
+csv_TV.reset_index(drop=True)
+```
+
+![10_csv_TV](../../images/2022-12-15-Text Analysis of abstract/10_csv_TV.png)
+
+```python
+csv_TV.to_csv('./ngram_전체.csv', encoding='euc-kr')
+```
