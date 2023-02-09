@@ -161,7 +161,7 @@ toc : true
 
 ## 5.1 State
 
-![5.1_state](../../images/2023-02-09-SuperStore Dashboard/5.1_state.png)
+![5.1_state](../../images/2023-02-09-SuperStore Dashboard/5.1_state-5924027.png)
 
 ![5.2_state](../../images/2023-02-09-SuperStore Dashboard/5.2_state.png)
 
@@ -178,7 +178,7 @@ toc : true
 
 ## 5.2 Segment
 
-![5.1_segment](../../images/2023-02-09-SuperStore Dashboard/5.1_segment.png)
+![5.1_segment](../../images/2023-02-09-SuperStore Dashboard/5.1_segment-5924036.png)
 
 > 위 그래프는 Segment별로 구분하여 현재년도는 막대그래프, 직전년도는 간트차트로 표현하였다. 이는 **이중축**을 사용하면 된다! 
 
