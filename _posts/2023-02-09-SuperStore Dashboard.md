@@ -96,8 +96,8 @@ toc : true
 
 | 계산된 된 필드  | 필드명         | 식                                                           |
 | --------------- | -------------- | ------------------------------------------------------------ |
-| Orders CY       | 현재년도       | IIF DATEPART('year', [Order Date])=[매개 변수].[Year] THEN [Order ID] END |
-| Orders PY       | 직전년도       | IIF DATEPART('year', [Order Date])=([매개 변수].[Year])-1 THEN [Order ID] END |
+| Orders CY       | 현재년도       | IF DATEPART('year', [Order Date])=[매개 변수].[Year] THEN [Order ID] END |
+| Orders PY       | 직전년도       | IF DATEPART('year', [Order Date])=([매개 변수].[Year])-1 THEN [Order ID] END |
 | %Chg_Orders     | 전년대비성장률 | (COUNTD([Orders CY])-COUNTD([Orders PY])) /COUNTD([Orders PY]) |
 | %Chg_Orders (+) | 증가표시       | IF [%Chg_Orders] > 0 THEN "▲" END                            |
 | %Chg_Orders (-) | 감소표시       | IF [%Chg_Orders] < 0 THEN "▼" END                            |
@@ -106,8 +106,8 @@ toc : true
 
 | 계산된 필드       | 필드명         | 식                                                           |
 | ----------------- | -------------- | ------------------------------------------------------------ |
-| Customers CY      | 현재년도       | IIF DATEPART('year', [Order Date])=[매개 변수].[Year] THEN  [Customer Name] END |
-| Customers PY      | 직전년도       | IIF DATEPART('year', [Order Date])=([매개 변수].[Year])-1 THEN [Customer Name] END |
+| Customers CY      | 현재년도       | IF DATEPART('year', [Order Date])=[매개 변수].[Year] THEN  [Customer Name] END |
+| Customers PY      | 직전년도       | IF DATEPART('year', [Order Date])=([매개 변수].[Year])-1 THEN [Customer Name] END |
 | %Chg_Customers    | 전년대비성장률 | (COUNTD([Customers CY])-COUNTD([Customers PY])) /COUNTD([Customers PY]) |
 | %Chg_Customers(+) | 증가표시       | IF [%Chg_Customers] > 0 THEN "▲" END                         |
 | %Chg_Customers(-) | 감소표시       | IF [%Chg_Customers] < 0 THEN "▼" END                         |
@@ -189,7 +189,7 @@ toc : true
 
 4. 데이터 값을 보기 좋게 수정하기 위해 ‘Select_Menu_CY’와 ‘Select_Menu_%Chg’ 서식을 변경해주었다.
 
-   - 일반서식으로 사용해도 되나, orders는 기준값이 다르기 때문에 계산식을 사용하여 표현해줌 → 추후 그래프는 Select_Menu_CY(Label)컬럼 사용)
+   - 일반서식으로 사용해도 되나, orders는 기준값이 다르기 때문에 계산식을 사용하여 표현해주었다. 
 
    - 제목도 매개변수로 변경하여 매개변수가 바뀔때 제목도 같이 바뀌는 것을 볼 수 있다. (제목편집→ 삽입 → 매개변수 클릭)
 
@@ -203,7 +203,7 @@ toc : true
 
 # 5.3 Manufactures
 
-![5.1_manufactures](../../images/2023-02-09-SuperStore Dashboard/5.1_manufactures.png)
+![5.3_ manufactures](../../images/2023-02-09-SuperStore Dashboard/5.3_ manufactures.png)
 
 > 위 그래프는 선택된 년도에서 상위10개의 manufactures를 랭킹별로 보여주는 그래프이다. 
 
