@@ -19,7 +19,9 @@ toc : true
 
 ![ss_dashboard](../../images/2023-02-09-SuperStore Dashboard/ss_dashboard.png)
 
-### 사용된 차원 및 측정값
+
+
+☑️ **사용된 측정값 및 차원**
 
 | 구분 | 칼럼명        | 설명         | 비고 |
 | :--- | ------------- | ------------ | ---- |
@@ -49,7 +51,7 @@ toc : true
 
 # 2. 매개변수 생성
 
-![03_매개변수생성](../../images/2023-02-09-SuperStore Dashboard/03_매개변수생성.png)
+![parameter](../../images/2023-02-09-SuperStore Dashboard/parameter.png)
 
 - 년도별로 데이터를 조회하기 위해 Year 매개변수 생성
 - Sales, Profit, Orders 클릭 시 해당 데이터로 조회할 수 있도록 P_menu 매개변수 생성
@@ -181,9 +183,9 @@ toc : true
 > 위 그래프는 Segment별로 구분하여 현재년도는 막대그래프, 직전년도는 간트차트로 표현하였다. 이는 **이중축**을 사용하면 된다! 
 
 1. 우리는 두가지 그래프를 표현해야하기 때문에 행에 ‘segment’ , 열에 ‘Select_Menu_CY’, ‘Select_Menu_PY’ 를 두어 이중축 해준다.
-2. 마크를 보면 ‘Select_Menu_CY’는 막대그래프로 변경해주고 ‘Select_Menu_PY’는 간트차트로 변경해주면 그림과 같은 그래프가 나타나지고 이를 **축동기화** 시켜준다!![5.2_segment](../images/2023-02-09-SuperStore Dashboard/5.2_segment.png)
+2. 마크를 보면 ‘Select_Menu_CY’는 막대그래프로 변경해주고 ‘Select_Menu_PY’는 간트차트로 변경해주면 그림과 같은 그래프가 나타나지고 이를 **축동기화** 시켜준다!![5.2_segment](../../images/2023-02-09-SuperStore Dashboard/5.2_segment.png)
 
-3. ‘Select_Menu_CY’ 집계별로 색상을 다르게 나타내주고, 현재년도의 집계값과 전년대비성장률, 증감표시까지 레이블에 나타나주었다. ![5.3_segment](../images/2023-02-09-SuperStore Dashboard/5.3_segment.png)
+3. ‘Select_Menu_CY’ 집계별로 색상을 다르게 나타내주고, 현재년도의 집계값과 전년대비성장률, 증감표시까지 레이블에 나타나주었다. ![5.3_segment](../../images/2023-02-09-SuperStore Dashboard/5.3_segment.png)
 
 4. 데이터 값을 보기 좋게 수정하기 위해 ‘Select_Menu_CY’와 ‘Select_Menu_%Chg’ 서식을 변경해주었다.
 
