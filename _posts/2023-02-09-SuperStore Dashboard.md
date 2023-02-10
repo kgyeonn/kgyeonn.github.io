@@ -201,7 +201,7 @@ toc : true
 
 
 
-# 5.3 Manufactures
+## 5.3 Manufactures
 
 ![5.3_ manufactures](../../images/2023-02-09-SuperStore Dashboard/5.3_ manufactures.png)
 
